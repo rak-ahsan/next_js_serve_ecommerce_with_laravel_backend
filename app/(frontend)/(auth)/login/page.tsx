@@ -7,7 +7,12 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import DefaultInput from "@/components/ui/default-input";
+import { POST, getDataUSer } from "@/data/route";
+import HomePage from "../../(home)/page";
 
+interface InputFormProps {
+  action?: any;
+}
 const FormSchema = z.object({
   email: z.string().min(2, {
     message: "Username must be at least 2 characters.",
@@ -17,7 +22,7 @@ const FormSchema = z.object({
   }),
 });
 
-export default function InputForm() {
+export default function InputForm({ action }: InputFormProps) {
   const form = useForm<z.infer<typeof FormSchema>>({
       resolver: zodResolver(FormSchema),
       defaultValues: {
@@ -26,33 +31,33 @@ export default function InputForm() {
     }),
     { handleSubmit, control, setValue, formState } = form;
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
-  }
-
   return (
-    <Form {...form}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="w-72">
-          <DefaultInput
-            control={control}
-            name={"email"}
-            label={"Email"}
-            placeholder={"input your email"}
-            required={true}
-            type={"email"}
-          />
-          <DefaultInput
-            control={control}
-            name={"password"}
-            label={"Password"}
-            placeholder={"input your password"}
-            required={true}
-            type={"password"}
-          />
-        </div>
-        <Button type="submit">Submit</Button>
-      </form>
-    </Form>
+    <>
+      <Form {...form}>
+        <form action={POST}>
+          <div className="w-72">
+            <DefaultInput
+              control={control}
+              name={"email"}
+              label={"Email"}
+              placeholder={"input your email"}
+              required={true}
+              type={"email"}
+            />
+            <DefaultInput
+              control={control}
+              name={"password"}
+              label={"Password"}
+              placeholder={"input your password"}
+              required={true}
+              type={"password"}
+            />
+          </div>
+          <Button>Submit</Button>
+        </form>
+      </Form>
+
+      <div></div>
+    </>
   );
 }

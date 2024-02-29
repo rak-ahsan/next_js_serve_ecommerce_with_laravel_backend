@@ -9,7 +9,6 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps): JSX.Element => {
   return (
     <div className="container  font-[14px] mt-3">
-      <TopNav />
       <Nav />
       {children}
     </div>

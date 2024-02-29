@@ -36,7 +36,6 @@ export default function InputForm({ datas }: InputFormProps) {
     }),
     { handleSubmit, control, setValue, formState } = form;
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    
     try {
       const response = await POST(data);
       if (response.errors) {
@@ -49,6 +48,10 @@ export default function InputForm({ datas }: InputFormProps) {
     }
   }
 
+  const update = async (formdata: FormData) => {
+    error.preventDefault();
+    console.log(formdata);
+  };
 
   return (
     <>

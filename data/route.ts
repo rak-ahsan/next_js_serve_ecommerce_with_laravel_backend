@@ -2,6 +2,8 @@
 
 import { revalidateTag } from "next/cache";
 
+const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
+
 export async function getData() {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts");
   if (!res.ok) {
@@ -21,13 +23,21 @@ export async function getDataUSer() {
   return res.json();
 }
 
-export async function POST(formData: any) {
-  revalidateTag("collection");
+export async function getSingleUser(id: number) {
+  const res = await fetch(`${baseURL}/get-single-user/${id}`, {
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    console.log(res);
+  }
+  return res.json();
+}
 
+export async function POST(data: any) {
   try {
     const rawFormData = {
-      email: formData.get("email"),
-      password: formData.get("password"),
+      email: data.email,
+      password: data.password,
     };
 
     const res = await fetch("http://127.0.0.1:8000/api/store", {
@@ -37,21 +47,22 @@ export async function POST(formData: any) {
       },
       body: JSON.stringify(rawFormData),
     });
-
-    if (!res.ok) {
-      throw new Error(`HTTP error! Status: ${res.status}`);
-    }
-
-    // Parse the response body as JSON
+    revalidateTag("collection");
     const responseData = await res.json();
-
-    // Stringify the response data if needed
-    const responseString = JSON.stringify(responseData);
-    console.log(responseString);
-
-    return responseString;
+    return responseData;
   } catch (error) {
     console.error("Error:", error);
     throw error;
   }
+}
+
+export async function deleteUser(id: any) {
+  const res = await fetch(`${baseURL}/destroy-single-user/${id}`, {
+    method: "DELETE",
+  });
+  revalidateTag("collection");
+  if (!res.ok) {
+    console.log(res);
+  }
+  return res.json();
 }

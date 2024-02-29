@@ -8,10 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import DefaultInput from "@/components/ui/default-input";
 import { POST, getDataUSer } from "@/data/route";
-import HomePage from "../../(home)/page";
+import { useState } from "react";
 
 interface InputFormProps {
   action?: any;
+  datas?: any;
 }
 const FormSchema = z.object({
   email: z.string().min(2, {
@@ -22,19 +23,43 @@ const FormSchema = z.object({
   }),
 });
 
-export default function InputForm({ action }: InputFormProps) {
+export default function InputForm({ datas }: InputFormProps) {
+  console.log(datas);
+
+  const [error, setError] = useState<any>();
   const form = useForm<z.infer<typeof FormSchema>>({
       resolver: zodResolver(FormSchema),
       defaultValues: {
-        email: "",
+        email: datas?.email,
+        password: datas?.password,
       },
     }),
     { handleSubmit, control, setValue, formState } = form;
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    
+    try {
+      const response = await POST(data);
+      if (response.errors) {
+        const errorMessages = Object.values(response.errors).flat();
+        setError(errorMessages);
+      } else {
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 
   return (
     <>
+      {datas && datas.id && <p>{datas.id}</p>}
       <Form {...form}>
-        <form action={POST}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-2/3 space-y-6"
+        >
+          {error && <span className="bg-red-800 h-30">{error}</span>}
+
           <div className="w-72">
             <DefaultInput
               control={control}
@@ -44,6 +69,7 @@ export default function InputForm({ action }: InputFormProps) {
               required={true}
               type={"email"}
             />
+            {error && error}
             <DefaultInput
               control={control}
               name={"password"}
@@ -53,11 +79,13 @@ export default function InputForm({ action }: InputFormProps) {
               type={"password"}
             />
           </div>
-          <Button>Submit</Button>
+          {!datas ? (
+            <Button>Submit</Button>
+          ) : (
+            <Button formAction={update}>Update</Button>
+          )}
         </form>
       </Form>
-
-      <div></div>
     </>
   );
 }

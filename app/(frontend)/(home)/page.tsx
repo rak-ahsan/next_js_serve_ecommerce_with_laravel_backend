@@ -1,7 +1,10 @@
 import { getData, getDataUSer } from "@/data/route";
 import InputForm from "../(auth)/login/page";
+import Link from "next/link";
+import ButtonTest from "@/components/button";
+import Modals from "@/components/modal";
 const HomePage = async () => {
-  const  data  = await getDataUSer();
+  const data = await getDataUSer();
   return (
     <>
       <InputForm />
@@ -15,6 +18,15 @@ const HomePage = async () => {
               <span>{item?.id}</span>
               <span>{item?.email}</span>
               <span>{item?.password}</span>
+              <span>
+                <Link href={`/${item?.id}`}>more</Link>
+              </span>
+              <div className=" grid grid-cols-2">
+                <ButtonTest id={item?.id} />
+                <Modals icon={"open"}>
+                  <InputForm datas={item} />
+                </Modals>
+              </div>
             </div>
           ))
         ) : (

@@ -3,6 +3,7 @@ import InputForm from "../(auth)/login/page";
 import Link from "next/link";
 import ButtonTest from "@/components/button";
 import Modals from "@/components/modal";
+import InputFormEdit from "../(auth)/login/edit";
 const HomePage = async () => {
   const data = await getDataUSer();
   return (
@@ -24,7 +25,7 @@ const HomePage = async () => {
               <div className=" grid grid-cols-2">
                 <ButtonTest id={item?.id} />
                 <Modals icon={"open"}>
-                  <InputForm datas={item} />
+                  <InputFormEdit datas={item} />
                 </Modals>
               </div>
             </div>

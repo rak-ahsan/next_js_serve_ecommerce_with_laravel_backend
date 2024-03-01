@@ -66,3 +66,29 @@ export async function deleteUser(id: any) {
   }
   return res.json();
 }
+
+export async function update(data: any) {
+  try {
+    const rawFormData = {
+      email: data.email,
+      password: data.password,
+      id: data.id,
+    };
+    const res = await fetch(`${baseURL}/update-single-user/${rawFormData.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(rawFormData),
+    });
+
+    revalidateTag("collection");
+    const responseData = await res.json();
+    console.log(responseData);
+
+    return responseData;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+}

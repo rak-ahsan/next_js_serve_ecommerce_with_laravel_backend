@@ -1,4 +1,3 @@
-import { TopNav } from "@/components/home/top-nav";
 import { Nav } from "@/components/nav";
 import React, { ReactNode } from "react";
 

@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import DefaultInput from "@/components/ui/default-input";
-import { Login, POST, getDataUSer } from "@/data/route";
+import { POST, getDataUSer } from "@/data/route";
 import { useState } from "react";
 
 interface InputFormProps {
@@ -38,8 +38,9 @@ export default function InputForm({ datas }: InputFormProps) {
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("password", data.password);
+    formData.append("image", imageFile as Blob);
     try {
-      const response = await Login(formData);
+      const response = await POST(formData);
 
       if (response.errors) {
         const errorMessages = Object.values(response.errors).flat();
@@ -58,7 +59,7 @@ export default function InputForm({ datas }: InputFormProps) {
   };
 
   const imageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0];
+    const file = e.target.files && e.target.files[0]; 
     if (file) {
       setImageFile(file);
     }
@@ -88,6 +89,13 @@ export default function InputForm({ datas }: InputFormProps) {
               placeholder={"input your password"}
               required={true}
               type={"password"}
+            />
+            <input
+              name={"image"}
+              placeholder={"Upload your image"}
+              required={true}
+              type={"file"}
+              onChange={imageChange}
             />
           </div>
           {!datas ? (

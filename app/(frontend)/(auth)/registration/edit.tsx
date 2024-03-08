@@ -3,17 +3,22 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import DefaultInput from "@/components/ui/default-input";
-import { Login, POST, getDataUSer } from "@/data/route";
+import { POST, getDataUSer, update } from "@/data/route";
 import { useState } from "react";
+import { revalidateTag } from "next/cache";
+import { BaseURL } from "@/lib/utils";
 
 interface InputFormProps {
   action?: any;
-  datas?: any;
+  datas?: {
+    id: any;
+    email: any;
+    password: any;
+  };
 }
 const FormSchema = z.object({
   email: z.string().min(2, {
@@ -22,53 +27,43 @@ const FormSchema = z.object({
   password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
-  image: z.any(),
+
+  id: z.number().optional(),
 });
 
-export default function InputForm({ datas }: InputFormProps) {
+export default function InputFormEdit({ datas }: InputFormProps) {
   const [error, setError] = useState<any>();
-  const [imageFile, setImageFile] = useState<File | null>(null); // State to hold the selected image file
   const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {},
-  });
-  const { handleSubmit, control, formState, reset } = form;
+      resolver: zodResolver(FormSchema),
+      defaultValues: {
+        email: datas?.email,
+        password: datas?.password,
+      },
+    }),
+    { handleSubmit, control, setValue, formState } = form;
 
-  async function onSubmit(data: any) {
-    const formData = new FormData();
-    formData.append("email", data.email);
-    formData.append("password", data.password);
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    data.id = datas?.id;
     try {
-      const response = await Login(formData);
-
+      const response = await update(data);
       if (response.errors) {
         const errorMessages = Object.values(response.errors).flat();
         setError(errorMessages);
-        toast.error("response.errors");
       } else {
-        toast.success(response.message);
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.log(error);
     }
   }
-
-  const update = async (formdata: FormData) => {
-    error.preventDefault();
-  };
-
-  const imageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0];
-    if (file) {
-      setImageFile(file);
-    }
-  };
 
   return (
     <>
       {datas && datas.id && <p>{datas.id}</p>}
       <Form {...form}>
-        <form onSubmit={handleSubmit(onSubmit)} className="w-2/3 space-y-6">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-2/3 space-y-6"
+        >
           {error && <span className="bg-red-800 h-30">{error}</span>}
 
           <div className="w-72">
@@ -90,11 +85,7 @@ export default function InputForm({ datas }: InputFormProps) {
               type={"password"}
             />
           </div>
-          {!datas ? (
-            <Button>Submit</Button>
-          ) : (
-            <Button formAction={update}>Update</Button>
-          )}
+          <Button>Update</Button>
         </form>
       </Form>
     </>

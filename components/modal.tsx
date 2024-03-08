@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 
 export interface Modals extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -5,6 +6,7 @@ export interface Modals extends React.InputHTMLAttributes<HTMLInputElement> {
   text?: string;
   title?: string;
   open?: any;
+  setOpenModal?: any;
   children: React.ReactNode;
 }
 
@@ -28,12 +30,15 @@ const Modals: React.FC<Modals> = ({
   open,
   ...props
 }) => {
+  const [openModal, setOpenModal] = React.useState(false);
   return (
     <div>
-      <AlertDialog open={open}>
-        <div className="toptext flex justify-between mb-2 ">
+      <AlertDialog>
+        <div className="toptext flex justify-between ">
           <p className="text-[18px] ">{text}</p>
-          <AlertDialogTrigger>{icon}</AlertDialogTrigger>
+          <AlertDialogTrigger className="btn bg-green-600 p-1 rounded-md text-white w-32">
+            {icon}
+          </AlertDialogTrigger>
         </div>
         <AlertDialogContent>
           <AlertDialogHeader>

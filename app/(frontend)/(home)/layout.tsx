@@ -1,4 +1,5 @@
 import { Nav } from "@/components/nav";
+import { cookies } from "next/headers";
 import React, { ReactNode } from "react";
 
 interface LayoutProps {

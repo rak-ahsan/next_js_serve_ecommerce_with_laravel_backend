@@ -1,5 +1,4 @@
-import { signal } from "@preact/signals";
-import { getDataUSer } from "@/data/route";
+import { getDataUser } from "@/data/route";
 import InputForm from "../(auth)/login/page";
 import Link from "next/link";
 import ButtonTest from "@/components/button";
@@ -8,7 +7,8 @@ import InputFormEdit from "../(auth)/login/edit";
 import Image from "next/image";
 
 const HomePage = async () => {
-  const data = await getDataUSer();
+  const data = await getDataUser();
+
   return (
     <>
       <InputForm />

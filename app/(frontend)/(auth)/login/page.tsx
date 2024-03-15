@@ -8,8 +8,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import DefaultInput from "@/components/ui/default-input";
-import { Login, POST, getDataUSer } from "@/data/route";
+import { Login } from "@/data/route";
 import { useState } from "react";
+import { Router } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface InputFormProps {
   action?: any;
@@ -33,24 +35,13 @@ export default function InputForm({ datas }: InputFormProps) {
     defaultValues: {},
   });
   const { handleSubmit, control, formState, reset } = form;
+  const router = useRouter();
 
   async function onSubmit(data: any) {
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("password", data.password);
-    try {
-      const response = await Login(formData);
-
-      if (response.errors) {
-        const errorMessages = Object.values(response.errors).flat();
-        setError(errorMessages);
-        toast.error("response.errors");
-      } else {
-        toast.success(response.message);
-      }
-    } catch (error) {
-      console.error("Error submitting form:", error);
-    }
+    const response = await Login(data);
   }
 
   const update = async (formdata: FormData) => {

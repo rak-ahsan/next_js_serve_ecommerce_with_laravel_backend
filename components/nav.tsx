@@ -13,6 +13,7 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { logOut } from "@/data/route";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -53,6 +54,11 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export function Nav() {
+  const logOutUser = async () => {
+    const response = await logOut();
+
+    console.log(response);
+  };
   return (
     <div className="container">
       <NavigationMenu>
@@ -121,6 +127,14 @@ export function Nav() {
             <Link href="/" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Documentation
+              </NavigationMenuLink>
+            </Link>
+            <Link href="/" legacyBehavior passHref>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                onClick={logOutUser}
+              >
+                Logout
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>

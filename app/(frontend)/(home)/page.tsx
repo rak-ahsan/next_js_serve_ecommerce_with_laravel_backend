@@ -5,13 +5,14 @@ import ButtonTest from "@/components/button";
 import Modals from "@/components/modal";
 import InputFormEdit from "../(auth)/login/edit";
 import Image from "next/image";
+import DataInput from "../(auth)/registration/page";
 
 const HomePage = async () => {
   const data = await getDataUser();
 
   return (
     <>
-      <InputForm />
+      <DataInput />
       <div className="container grid lg:grid-cols-4">
         {data?.length > 0 ? (
           data.map((item: any) => (

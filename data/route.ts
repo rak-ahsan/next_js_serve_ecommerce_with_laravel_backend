@@ -26,18 +26,22 @@ export async function Login(data: { email: string; password: string }) {
   try {
     const res = await fetch(`${baseURL}/login`, {
       method: "POST",
-      cache: "no-store",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
     const responseData = await res.json();
+
+    console.log(responseData);
+
     if (responseData.token) {
       cookies().set("token", responseData.token, {
         httpOnly: true,
         expires: new Date("2030-01-01"),
       });
+
+      cookies().set("data", responseData);
     }
 
     return responseData;
@@ -49,8 +53,9 @@ export async function Login(data: { email: string; password: string }) {
 
 export async function getDataUser() {
   try {
-    const responseData = fetchWithAuth("/get", {
+    const responseData = await fetchWithAuth("/get", {
       method: "GET",
+      next: { tags: ["data"] },
     });
 
     return responseData;
@@ -75,6 +80,7 @@ export async function logOut() {
     }
 
     const data = await res.json();
+    cookies().delete("token");
     return data;
   } catch (error) {
     console.error("There was a problem with the fetch operation: ", error);
@@ -91,38 +97,48 @@ export async function getSingleUser(id: number) {
   return res.json();
 }
 
-export async function loginUser(credentials: FormData) {
+export async function POST(formData: FormData) {
+  revalidateTag("data");
+
   try {
-    const response = await fetch("http://127.0.0.1:8000/api/login", {
+    const response = await fetchWithAuth("/store", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(credentials),
+      body: formData,
     });
 
-    if (!response.ok) {
-      const errorMessage = await response.json();
-      throw new Error(errorMessage.message || "Login failed");
-    }
-    const responseData = await response.json();
-    return responseData;
+    return response;
   } catch (error) {
     console.error("Error:", error);
     throw error;
   }
 }
 
+// export async function POST(formData: FormData) {
+//   try {
+//     const response = await fetch(`${baseURL}/store`, {
+//       method: "POST",
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//       body: formData,
+//     });
+
+//     return response;
+//   } catch (error) {
+//     console.error("Error:", error);
+//     throw error;
+//   }
+// }
+
 export async function deleteUser(id: any) {
-  revalidateTag("collection");
-  const res = await fetch(`${baseURL}/destroy-single-user/${id}`, {
+  revalidateTag("data");
+  const res = await fetchWithAuth(`/destroy-single-user/${id}`, {
     method: "DELETE",
   });
   if (!res.ok) {
     console.log(res);
   }
-  return res.json();
+  return res;
 }
 
 export async function update(data: any) {
@@ -132,19 +148,16 @@ export async function update(data: any) {
       password: data.password,
       id: data.id,
     };
-    const res = await fetch(`${baseURL}/update-single-user/${rawFormData.id}`, {
+    const res = await fetchWithAuth(`/update-single-user/${rawFormData.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(rawFormData),
     });
+    revalidateTag("data");
 
-    revalidateTag("collection");
-    const responseData = await res.json();
-    console.log(responseData);
-
-    return responseData;
+    return res;
   } catch (error) {
     console.error("Error:", error);
     throw error;

@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import DefaultInput from "@/components/ui/default-input";
-import { POST, getDataUSer } from "@/data/route";
+import { POST } from "@/data/route";
 import { useState } from "react";
 
 interface InputFormProps {
@@ -25,7 +25,7 @@ const FormSchema = z.object({
   image: z.any(),
 });
 
-export default function InputForm({ datas }: InputFormProps) {
+export default function DataInput({ datas }: InputFormProps) {
   const [error, setError] = useState<any>();
   const [imageFile, setImageFile] = useState<File | null>(null); // State to hold the selected image file
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -38,14 +38,16 @@ export default function InputForm({ datas }: InputFormProps) {
     const formData = new FormData();
     formData.append("email", data.email);
     formData.append("password", data.password);
-    formData.append("image", imageFile as Blob);
+    formData.append("image", imageFile as Blob); // Assuming imageFile is defined correctly
+
     try {
       const response = await POST(formData);
+      console.log(response);
 
       if (response.errors) {
         const errorMessages = Object.values(response.errors).flat();
         setError(errorMessages);
-        toast.error("response.errors");
+        toast.error(errorMessages.join(", "));
       } else {
         toast.success(response.message);
       }
@@ -59,7 +61,7 @@ export default function InputForm({ datas }: InputFormProps) {
   };
 
   const imageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0]; 
+    const file = e.target.files && e.target.files[0];
     if (file) {
       setImageFile(file);
     }

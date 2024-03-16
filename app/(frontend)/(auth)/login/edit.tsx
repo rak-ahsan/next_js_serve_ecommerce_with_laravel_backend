@@ -7,10 +7,9 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import DefaultInput from "@/components/ui/default-input";
-import { POST, getDataUSer, update } from "@/data/route";
+import { POST, update } from "@/data/route";
 import { useState } from "react";
-import { revalidateTag } from "next/cache";
-import { BaseURL } from "@/lib/utils";
+import { toast } from "react-toastify";
 
 interface InputFormProps {
   action?: any;
@@ -50,6 +49,7 @@ export default function InputFormEdit({ datas }: InputFormProps) {
         const errorMessages = Object.values(response.errors).flat();
         setError(errorMessages);
       } else {
+        toast.success(response.message);
       }
     } catch (error) {
       console.log(error);

@@ -14,7 +14,6 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { logOut } from "@/data/route";
-
 const components: { title: string; href: string; description: string }[] = [
   {
     title: "Alert Dialog",
@@ -56,8 +55,6 @@ const components: { title: string; href: string; description: string }[] = [
 export function Nav() {
   const logOutUser = async () => {
     const response = await logOut();
-
-    console.log(response);
   };
   return (
     <div className="container">

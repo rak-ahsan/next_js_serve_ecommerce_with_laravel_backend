@@ -3,14 +3,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import DefaultInput from "@/components/ui/default-input";
 import { Login } from "@/data/route";
 import { useState } from "react";
-import { Router } from "next/router";
 import { useRouter } from "next/navigation";
 
 interface InputFormProps {
@@ -42,6 +40,12 @@ export default function InputForm({ datas }: InputFormProps) {
     formData.append("email", data.email);
     formData.append("password", data.password);
     const response = await Login(data);
+
+    if (response.message) {
+      router.push("/");
+    } else {
+      setError(response.error);
+    }
   }
 
   const update = async (formdata: FormData) => {

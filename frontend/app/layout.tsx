@@ -5,6 +5,7 @@ const inter = Inter({ subsets: ["latin"] });
 import "react-toastify/dist/ReactToastify.css";
 
 import { ToastContainer } from "./toster";
+
 export const metadata: Metadata = {
   title: "E-commerce",
   description: "rakib",
@@ -15,6 +16,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+
   return (
     <html lang="en">
       <body className={inter.className}>

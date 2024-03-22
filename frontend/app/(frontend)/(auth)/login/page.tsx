@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import DefaultInput from "@/components/ui/default-input";
 import { Login } from "@/data/route";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { redirect, useRouter } from "next/navigation";
+import { getToken } from "@/lib/token";
 
 interface InputFormProps {
   action?: any;
@@ -40,7 +41,6 @@ export default function InputForm({ datas }: InputFormProps) {
     formData.append("email", data.email);
     formData.append("password", data.password);
     const response = await Login(data);
-
     if (response.message) {
       router.push("/");
     } else {

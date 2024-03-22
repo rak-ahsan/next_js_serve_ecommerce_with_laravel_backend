@@ -1,4 +1,5 @@
 "use server";
+import { unstable_noStore as noStore } from "next/cache";
 
 import { fetchWithAuth } from "@/lib/fetch";
 import { revalidateTag } from "next/cache";
@@ -24,6 +25,7 @@ const token = tokenAll?.value;
 
 export async function Login(data: { email: string; password: string }) {
   try {
+    noStore();
     const res = await fetch(`${baseURL}/login`, {
       method: "POST",
       headers: {
@@ -40,8 +42,6 @@ export async function Login(data: { email: string; password: string }) {
         httpOnly: true,
         expires: new Date("2030-01-01"),
       });
-
-      cookies().set("data", responseData);
     }
 
     return responseData;

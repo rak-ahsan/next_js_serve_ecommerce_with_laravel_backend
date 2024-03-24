@@ -40,7 +40,6 @@ export async function Login(data: { email: string; password: string }) {
         expires: new Date("2030-01-01"),
       });
     }
-
     return responseData;
   } catch (error) {
     console.error("Error:", error);

@@ -34,9 +34,6 @@ export async function Login(data: { email: string; password: string }) {
       body: JSON.stringify(data),
     });
     const responseData = await res.json();
-
-    console.log(responseData);
-
     if (responseData.token) {
       cookies().set("token", responseData.token, {
         httpOnly: true,
@@ -67,22 +64,12 @@ export async function getDataUser() {
 
 export async function logOut() {
   try {
-    const res = await fetch(`${baseURL}/log-out`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
+    const response = await fetchWithAuth("/log-out", {
+      method: "GET",
     });
-
-    if (!res.ok) {
-      throw new Error(`HTTP error! status: ${res.status}`);
-    }
-
-    const data = await res.json();
-    cookies().delete("token");
-    return data;
-  } catch (error) {
+      cookies().delete("token");
+      return response;
+  }catch (error) {
     console.error("There was a problem with the fetch operation: ", error);
   }
 }

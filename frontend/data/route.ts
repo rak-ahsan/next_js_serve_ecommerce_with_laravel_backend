@@ -34,8 +34,16 @@ export async function Login(data: { email: string; password: string }) {
       body: JSON.stringify(data),
     });
     const responseData = await res.json();
+
+    console.log(responseData);
+    
     if (responseData.token) {
       cookies().set("token", responseData.token, {
+        httpOnly: true,
+        expires: new Date("2030-01-01"),
+      });
+
+      cookies().set("user", responseData.user, {
         httpOnly: true,
         expires: new Date("2030-01-01"),
       });

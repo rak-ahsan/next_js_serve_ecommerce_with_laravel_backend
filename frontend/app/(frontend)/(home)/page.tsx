@@ -6,6 +6,7 @@ import Modals from "@/components/modal";
 import InputFormEdit from "../(auth)/login/edit";
 import Image from "next/image";
 import DataInput from "../(auth)/registration/page";
+import Rating from "../rating/page";
 
 const HomePage = async () => {
   const data = await getDataUser();
@@ -32,11 +33,12 @@ const HomePage = async () => {
               <span>
                 <Link href={`/${item?.id}`}>more</Link>
               </span>
-              <div className=" grid grid-cols-2 justify-center items-center">
+              <div className=" grid grid-cols-2 justify-center gap-4 items-center">
                 <ButtonTest id={item.id} />
                 <Modals icon={"Edit "}>
                   <InputFormEdit datas={item} />
                 </Modals>
+                <Rating id={item?.id} />
               </div>
             </div>
           ))

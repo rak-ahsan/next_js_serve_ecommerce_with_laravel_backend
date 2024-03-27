@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@ant-design/nextjs-registry": "^1.0.0",
+    "@fortawesome/fontawesome-svg-core": "^6.5.1",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@hookform/resolvers": "^3.3.4",
     "@preact/signals": "^1.2.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",

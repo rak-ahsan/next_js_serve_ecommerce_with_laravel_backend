@@ -5,6 +5,7 @@ const inter = Inter({ subsets: ["latin"] });
 import "react-toastify/dist/ReactToastify.css";
 
 import { ToastContainer } from "./toster";
+import { GlobalProvider } from "./global-provicer";
 
 export const metadata: Metadata = {
   title: "E-commerce",
@@ -16,13 +17,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
-
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
-        <ToastContainer />
+        <GlobalProvider>
+          {children}
+          <ToastContainer />
+        </GlobalProvider>
       </body>
     </html>
   );

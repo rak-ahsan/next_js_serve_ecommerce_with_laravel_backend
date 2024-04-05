@@ -7,6 +7,8 @@ import InputFormEdit from "../(auth)/login/edit";
 import Image from "next/image";
 import DataInput from "../(auth)/registration/page";
 import Rating from "../rating/page";
+import { ShoppingCart } from "lucide-react";
+import CartIcon from "@/components/utilities/cart";
 
 const HomePage = async () => {
   const data = await getDataUser();
@@ -39,6 +41,7 @@ const HomePage = async () => {
                   <InputFormEdit datas={item} />
                 </Modals>
                 <Rating id={item?.id} />
+                <CartIcon product={item} />
               </div>
             </div>
           ))

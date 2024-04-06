@@ -43,6 +43,7 @@ const HomePage = async () => {
                 <Rating id={item?.id} />
                 <CartIcon product={item} />
               </div>
+              
             </div>
           ))
         ) : (

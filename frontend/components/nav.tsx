@@ -14,6 +14,10 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { logOut } from "@/data/route";
+import { ShoppingCart } from "lucide-react";
+import ModalsCart from "./cart-modal";
+import CartPage from "@/app/(frontend)/cart/page";
+import { useCart } from "@/context/cart-context";
 const components: { title: string; href: string; description: string }[] = [
   {
     title: "Alert Dialog",
@@ -53,9 +57,15 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export function Nav() {
+  const handleClick = () => {
+    setOpenModal(true);
+  };
+  const [openModal, setOpenModal] = React.useState(false);
   const logOutUser = async () => {
     const response = await logOut();
   };
+  const { cart } = useCart();
+
   return (
     <div className="container">
       <NavigationMenu>
@@ -134,9 +144,16 @@ export function Nav() {
                 Logout
               </NavigationMenuLink>
             </Link>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              <ShoppingCart onClick={handleClick} />
+              {cart.length}
+            </NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
+      <ModalsCart open={openModal} setOpenModal={setOpenModal}>
+        <CartPage />
+      </ModalsCart>
     </div>
   );
 }

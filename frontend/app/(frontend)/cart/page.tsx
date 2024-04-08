@@ -1,10 +1,11 @@
 "use client";
 import { useCart } from "@/context/cart-context";
+import { Trash } from "lucide-react";
 import React from "react";
 
 const CartPage = () => {
   const { cart } = useCart();
-  console.log(cart);
+  const { removeFromCart } = useCart();
 
 
   return (
@@ -30,7 +31,10 @@ const CartPage = () => {
                 {item.quantity}
               </td>
               <td className="border border-gray-200 py-2 px-4">
-                ${item.price * item.quantity}
+                ${item.id * item.quantity}
+              </td>
+              <td onClick={() => removeFromCart(item.id)}>
+                <Trash />
               </td>
             </tr>
           ))}

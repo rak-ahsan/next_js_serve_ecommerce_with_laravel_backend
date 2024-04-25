@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get("token");
-  const userCookie = request.cookies.get("user");
+  // const userCookie = request.cookies.get("user");
   // if (userCookie) {
   //   const userObject = JSON.parse(userCookie);
   //   console.log(userObject); // This will now be an object you can interact with

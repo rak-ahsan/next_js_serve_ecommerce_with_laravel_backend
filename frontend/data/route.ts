@@ -41,10 +41,10 @@ export async function Login(data: { email: string; password: string }) {
         expires: new Date("2030-01-01"),
       });
 
-      cookies().set("user", responseData.user, {
-        httpOnly: true,
-        expires: new Date("2030-01-01"),
-      });
+      // cookies().set("user", responseData.user, {
+      //   httpOnly: true,
+      //   expires: new Date("2030-01-01"),
+      // });
     }
     return responseData;
   } catch (error) {

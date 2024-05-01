@@ -3,7 +3,9 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\TestController;
 use App\Http\Middleware\AttachTokenCookie;
+use App\Mail\TestEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,3 +33,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/registration', [AuthController::class, 'store']);
+
+Route::get('test-email', function () {
+    Mail::to('mdmosharoofhossain12@gmail.com')->send(new TestEmail());
+});

@@ -9,14 +9,18 @@ import DataInput from "../(auth)/registration/page";
 import Rating from "../rating/page";
 import { ShoppingCart } from "lucide-react";
 import CartIcon from "@/components/utilities/cart";
-
+import binaryToDecimal from "react-social-share-rak";
 const HomePage = async () => {
   const data = await getDataUser();
+  const a = binaryToDecimal(10);
+
+  console.log(a);
 
   return (
     <>
       <DataInput />
       <div className="container grid lg:grid-cols-4">
+        <p>hi</p>
         {data?.length > 0 ? (
           data.map((item: any) => (
             <div
@@ -43,7 +47,6 @@ const HomePage = async () => {
                 <Rating id={item?.id} />
                 <CartIcon product={item} />
               </div>
-              
             </div>
           ))
         ) : (

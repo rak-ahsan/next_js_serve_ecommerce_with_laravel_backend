@@ -9,7 +9,6 @@ import DataInput from "../(auth)/registration/page";
 import Rating from "../rating/page";
 import { ShoppingCart } from "lucide-react";
 import CartIcon from "@/components/utilities/cart";
-import binaryToDecimal from "react-social-share-rak";
 const HomePage = async () => {
   const data = await getDataUser();
   const a = binaryToDecimal(10);

@@ -11,9 +11,6 @@ import { ShoppingCart } from "lucide-react";
 import CartIcon from "@/components/utilities/cart";
 const HomePage = async () => {
   const data = await getDataUser();
-  const a = binaryToDecimal(10);
-
-  console.log(a);
 
   return (
     <>

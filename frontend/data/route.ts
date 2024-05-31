@@ -4,25 +4,7 @@ import { unstable_noStore as noStore } from "next/cache";
 import { fetchWithAuth } from "@/lib/fetch";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
-// const tokenCookie = cookies().get("token");
-// const token = tokenCookie ? tokenCookie.value : null;
 const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
-const cookieStore = cookies();
-const tokenAll = cookieStore.get("token");
-const token = tokenAll?.value;
-
-// export async function getData() {
-//   const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
-//     headers: {
-//       Authorization: `Bearer 2|sVhP30JKC4Lbm9Z0s50G6DSZxX6RZRK2ENVDcRox5e38ad35`,
-//     },
-//   });
-//   if (!res.ok) {
-//     throw new Error("Failed to fetch data");
-//   }
-//   return res.json();
-// }
-
 export async function Login(data: { email: string; password: string }) {
   try {
     noStore();
@@ -34,17 +16,12 @@ export async function Login(data: { email: string; password: string }) {
       body: JSON.stringify(data),
     });
     const responseData = await res.json();
-    
+
     if (responseData.token) {
       cookies().set("token", responseData.token, {
         httpOnly: true,
         expires: new Date("2030-01-01"),
       });
-
-      // cookies().set("user", responseData.user, {
-      //   httpOnly: true,
-      //   expires: new Date("2030-01-01"),
-      // });
     }
     return responseData;
   } catch (error) {
@@ -72,21 +49,18 @@ export async function logOut() {
     const response = await fetchWithAuth("/log-out", {
       method: "GET",
     });
-      cookies().delete("token");
-      return response;
-  }catch (error) {
+    cookies().delete("token");
+    return response;
+  } catch (error) {
     console.error("There was a problem with the fetch operation: ", error);
   }
 }
 
-export async function getSingleUser(id: number) {
-  const res = await fetch(`${baseURL}/get-single-user/${id}`, {
-    cache: "no-store",
+export async function getSingleUser(id: number) {  
+  const response = await fetchWithAuth(`/get-single-user/${id}`, {
+    method: "GET",
   });
-  if (!res.ok) {
-    console.log(res);
-  }
-  return res.json();
+  return response;
 }
 
 export async function POST(formData: FormData) {

@@ -1,4 +1,5 @@
 import { getSingleUser } from "@/data/route";
+import { fetchWithAuth } from "@/lib/fetch";
 import { Metadata, ResolvingMetadata } from "next";
 
 type Props = {
@@ -22,8 +23,7 @@ export default async function Layout({
 }: {
   params: { id: number };
 }) {
-  const data = await getSingleUser(id);
-
+  const data = await fetchWithAuth(`/get-single-user/${id}`);
   return (
     <>
       <div>My email: {data.email}</div>

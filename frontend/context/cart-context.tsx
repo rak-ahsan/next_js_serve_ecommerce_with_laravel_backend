@@ -8,6 +8,7 @@ import React, {
 } from "react";
 
 interface Product {
+  quantity: number;
   id: number;
   name?: string;
   price?: number;

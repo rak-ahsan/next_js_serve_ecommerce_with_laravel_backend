@@ -14,7 +14,6 @@ import { getToken } from "@/lib/token";
 
 interface InputFormProps {
   action?: any;
-  datas?: any;
 }
 const FormSchema = z.object({
   email: z.string().min(2, {
@@ -26,46 +25,25 @@ const FormSchema = z.object({
   image: z.any(),
 });
 
-export default function InputForm({ datas }: InputFormProps) {
+export default function InputForm() {
   const [error, setError] = useState<any>();
-  const [imageFile, setImageFile] = useState<File | null>(null); // State to hold the selected image file
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {},
   });
   const { handleSubmit, control, formState, reset } = form;
-  const router = useRouter();
 
   async function onSubmit(data: any) {
-    const formData = new FormData();
-    formData.append("email", data.email);
-    formData.append("password", data.password);
     const response = await Login(data);
-    if (response.message) {
-      router.push("/");
-    } else {
+    if (response.error) {
       setError(response.error);
     }
   }
 
-  const update = async (formdata: FormData) => {
-    error.preventDefault();
-  };
-
-  const imageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files && e.target.files[0];
-    if (file) {
-      setImageFile(file);
-    }
-  };
-
   return (
     <>
-      {datas && datas.id && <p>{datas.id}</p>}
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)} className="w-2/3 space-y-6">
-          {error && <span className="bg-red-800 h-30">{error}</span>}
-
           <div className="w-72">
             <DefaultInput
               control={control}
@@ -75,7 +53,6 @@ export default function InputForm({ datas }: InputFormProps) {
               required={true}
               type={"email"}
             />
-            {error && error}
             <DefaultInput
               control={control}
               name={"password"}
@@ -85,13 +62,10 @@ export default function InputForm({ datas }: InputFormProps) {
               type={"password"}
             />
           </div>
-          {!datas ? (
-            <Button>Submit</Button>
-          ) : (
-            <Button formAction={update}>Update</Button>
-          )}
+          <Button>Submit</Button>
         </form>
       </Form>
+      <span className="text-red-600">{error}</span>
     </>
   );
 }

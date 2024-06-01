@@ -27,7 +27,7 @@ const FormSchema = z.object({
 
 export default function DataInput({ datas }: InputFormProps) {
   const [error, setError] = useState<any>();
-  const [imageFile, setImageFile] = useState<File | null>(null); // State to hold the selected image file
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {},
@@ -42,8 +42,6 @@ export default function DataInput({ datas }: InputFormProps) {
 
     try {
       const response = await POST(formData);
-      console.log(response);
-
       if (response.errors) {
         const errorMessages = Object.values(response.errors).flat();
         setError(errorMessages);

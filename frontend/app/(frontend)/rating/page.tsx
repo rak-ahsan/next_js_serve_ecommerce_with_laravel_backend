@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Star } from 'lucide-react';
 
 interface Props {
-    id: any
+    id: string
 }
 export default function Rating({ id }: Props) {
     const [selectedValue, setSelectedValue] = useState('');

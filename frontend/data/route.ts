@@ -23,6 +23,13 @@ export async function Login(data: { email: string; password: string }) {
         expires: new Date("2030-01-01"),
       });
     }
+
+    if (responseData?.user?.role) {
+      cookies().set("role", responseData.user.role, {
+        httpOnly: true,
+        expires: new Date("2030-01-01"),
+      });
+    }
     return responseData;
   } catch (error) {
     console.error("Error:", error);
@@ -56,7 +63,7 @@ export async function logOut() {
   }
 }
 
-export async function getSingleUser(id: number) {  
+export async function getSingleUser(id: number) {
   const response = await fetchWithAuth(`/get-single-user/${id}`, {
     method: "GET",
   });

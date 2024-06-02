@@ -51,6 +51,24 @@ export async function getDataUser() {
   }
 }
 
+export async function loop(pageNum: Number) {
+  try {
+    const responseData = await fetch(
+      `https://jsonplaceholder.typicode.com/posts?_page=${pageNum}&_limit=20`,
+      {
+        cache: "no-store",
+      }
+    );
+    const jsonData = await responseData.json();
+    console.log(jsonData);
+
+    return jsonData;
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+}
+
 export async function logOut() {
   try {
     const response = await fetchWithAuth("/log-out", {

@@ -8,10 +8,10 @@ import React, {
 } from "react";
 
 interface Product {
-  quantity: number;
   id: number;
   name?: string;
   price?: number;
+  quantity: number; // Add quantity property
 }
 
 interface CartContextType {
@@ -19,6 +19,8 @@ interface CartContextType {
   addToCart: (product: Product) => void;
   removeFromCart: (productId: number) => void;
   clearCart: () => void;
+  increaseQuantity: (productId: number) => void; // Function to increase quantity
+  decreaseQuantity: (productId: number) => void; // Function to decrease quantity
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -61,9 +63,32 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({
     setCart([]);
   };
 
+  const increaseQuantity = (productId: number) => {
+    const updatedCart = cart.map((item) =>
+      item.id === productId ? { ...item, quantity: item.quantity + 1 } : item
+    );
+    setCart(updatedCart);
+  };
+
+  const decreaseQuantity = (productId: number) => {
+    const updatedCart = cart.map((item) =>
+      item.id === productId && item.quantity > 1
+        ? { ...item, quantity: item.quantity - 1 }
+        : item
+    );
+    setCart(updatedCart);
+  };
+
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, clearCart }}
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        increaseQuantity,
+        decreaseQuantity,
+      }}
     >
       {children}
     </CartContext.Provider>
@@ -77,3 +102,4 @@ export const useCart = (): CartContextType => {
   }
   return context;
 };
+

@@ -86,12 +86,12 @@ function QuizApp() {
                 <div className="text-center">
                     <h2 className="text-2xl font-bold mb-4">Question {currentQuestion + 1}</h2>
                     <p className="text-lg mb-4">{quizData[currentQuestion].question}</p>
-                    <div className="flex justify-center">
+                    <div className="md:flex justify-center ">
                         {quizData[currentQuestion].options.map((option, index) => (
                             <button
                                 key={index}
                                 onClick={() => handleOptionSelect(option)}
-                                className={`py-2 px-4 rounded mr-4
+                                className={`py-2 px-4 rounded  lg:mr-4 m-1
                   ${selectedOption === option ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'} 
                   hover:bg-blue-700 hover:text-white`}
                             >

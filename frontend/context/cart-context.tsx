@@ -11,7 +11,7 @@ interface Product {
   id: number;
   name?: string;
   price?: number;
-  quantity: number; // Add quantity property
+  quantity: number;
 }
 
 interface CartContextType {
@@ -19,8 +19,8 @@ interface CartContextType {
   addToCart: (product: Product) => void;
   removeFromCart: (productId: number) => void;
   clearCart: () => void;
-  increaseQuantity: (productId: number) => void; // Function to increase quantity
-  decreaseQuantity: (productId: number) => void; // Function to decrease quantity
+  increaseQuantity: (productId: number) => void; 
+  decreaseQuantity: (productId: number) => void; 
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);

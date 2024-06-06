@@ -1,19 +1,20 @@
 "use client";
 import { loop } from "@/data/route";
 import React, { useState, useEffect } from "react";
+import Map from "./map";
 
 interface props {
-  response?: any;
+  pageNum?: any;
 }
 
-const InfinitePosts: React.FC<props> = ({}) => {
-  const [posts, setPosts] = useState<any>([]);
+const InfinitePosts: React.FC<props> = ({ }) => {
+  const [posts, setPosts] = useState<any[]>([]); // Initialize posts as an empty array
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
   const fetchPosts = async (pageNum: number) => {
-    if (loading) return; // Prevent duplicate calls
+    if (loading) return;
 
     setLoading(true);
     console.log(`Fetching page ${pageNum}`);
@@ -56,15 +57,7 @@ const InfinitePosts: React.FC<props> = ({}) => {
   return (
     <div>
       <h1>Posts</h1>
-      <div>
-        {posts.map((post: any) => (
-          <div key={post.id}>
-            <h2>{post.title}</h2>
-            <h2>{post.id}</h2>
-            <p>{post.body}</p>
-          </div>
-        ))}
-      </div>
+      <Map posts={posts}/>
       {loading && <p>Loading more posts...</p>}
       {!hasMore && <p>No more posts to load.</p>}
     </div>

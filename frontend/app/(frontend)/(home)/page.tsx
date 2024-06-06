@@ -31,7 +31,7 @@ const HomePage = async () => {
                 alt={"data Image"}
               />
               <span>{item?.email}</span>
-              <span>{item?.password}</span>
+              <span className="overflow-hidden">{item?.password}</span>
               <span>
                 <Link href={`/${item?.id}`}>more</Link>
               </span>

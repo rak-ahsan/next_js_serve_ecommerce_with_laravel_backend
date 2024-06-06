@@ -7,8 +7,8 @@ interface props {
   pageNum?: any;
 }
 
-const InfinitePosts: React.FC<props> = ({ }) => {
-  const [posts, setPosts] = useState<any[]>([]); // Initialize posts as an empty array
+const InfinitePosts: React.FC<props> = ({}) => {
+  const [posts, setPosts] = useState<any>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -41,7 +41,7 @@ const InfinitePosts: React.FC<props> = ({ }) => {
   const handleScroll = () => {
     if (
       window.innerHeight + window.scrollY >=
-        document.documentElement.scrollHeight - 100 &&
+      document.documentElement.scrollHeight - 100 &&
       !loading &&
       hasMore
     ) {
@@ -57,7 +57,15 @@ const InfinitePosts: React.FC<props> = ({ }) => {
   return (
     <div>
       <h1>Posts</h1>
-      <Map posts={posts}/>
+      <div>
+        {posts.map((post: any) => (
+          <div key={post.id}>
+            <h2>{post.title}</h2>
+            <h2>{post.id}</h2>
+            <p>{post.body}</p>
+          </div>
+        ))}
+      </div>
       {loading && <p>Loading more posts...</p>}
       {!hasMore && <p>No more posts to load.</p>}
     </div>

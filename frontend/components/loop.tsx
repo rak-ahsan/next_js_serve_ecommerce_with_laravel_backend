@@ -2,12 +2,12 @@
 import { loop } from "@/data/route";
 import React, { useState, useEffect, useRef } from "react";
 
-interface Props {
+interface props {
   response?: any;
 }
 
-const InfinitePosts: React.FC<Props> = ({ response = [] }) => {
-  const [posts, setPosts] = useState<any[]>(response);
+const InfinitePosts: React.FC<props> = ({ }) => {
+  const [posts, setPosts] = useState<any>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -15,7 +15,7 @@ const InfinitePosts: React.FC<Props> = ({ response = [] }) => {
   const hasScrolled = useRef(false);
 
   const fetchPosts = async (pageNum: number) => {
-    if (isFetching.current) return;
+    if (loading) return; // Prevent duplicate calls
 
     isFetching.current = true;
     setLoading(true);
@@ -79,16 +79,13 @@ const InfinitePosts: React.FC<Props> = ({ response = [] }) => {
           </div>
         ))}
       </div>
-      {loading && (
-        <div
-          className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
-          role="status"
-        >
-          <span className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Loading...
-          </span>
-        </div>
-      )}
+      {loading && <div
+        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+        role="status">
+        <span
+          className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+        >Loading...</span>
+      </div>}
       {!hasMore && <p>No more posts to load.</p>}
     </div>
   );

@@ -26,7 +26,7 @@ const InfinitePosts: React.FC<props> = ({ }) => {
       if (newPosts.length === 0) {
         setHasMore(false);
       } else {
-        setPosts((prevPosts) => [...prevPosts, ...newPosts]);
+        setPosts((prevPosts: any) => [...prevPosts, ...newPosts]);
       }
     } catch (error) {
       console.error("Error fetching posts:", error);

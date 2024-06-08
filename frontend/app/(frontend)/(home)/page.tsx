@@ -16,7 +16,6 @@ const HomePage = async () => {
     <>
       <DataInput />
       <div className="container grid lg:grid-cols-4">
-        <p>hi</p>
         {data?.length > 0 ? (
           data.map((item: any) => (
             <div

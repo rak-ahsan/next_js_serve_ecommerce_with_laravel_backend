@@ -54,7 +54,7 @@ export async function getDataUser() {
 export async function loop(page: number) {
   try {
     const responseData = await fetch(
-      `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=20`,
+      `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=30`,
       {
         cache: "no-store",
       }

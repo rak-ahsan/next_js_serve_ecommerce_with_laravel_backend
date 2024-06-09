@@ -1,15 +1,17 @@
 import InfinitePosts from "@/components/loop";
 import { loop } from "@/data/route";
+import Link from "next/link";
 import React from "react";
 
-const page = async () => {
+const ProductPage = async () => {
   const response = await loop(1);
 
   return (
     <div>
-      <InfinitePosts response={response} />
+      <Link href="/">Home</Link>
+      <InfinitePosts response={response.data} />
     </div>
   );
 };
 
-export default page;
+export default ProductPage;

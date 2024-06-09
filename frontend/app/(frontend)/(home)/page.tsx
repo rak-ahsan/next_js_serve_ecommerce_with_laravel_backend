@@ -9,11 +9,15 @@ import DataInput from "../(auth)/registration/page";
 import Rating from "../rating/page";
 import { ShoppingCart } from "lucide-react";
 import CartIcon from "@/components/utilities/cart";
+import DialogDemo from "@/components/cart/cart";
 const HomePage = async () => {
   const data = await getDataUser();
 
   return (
     <>
+      <Link href="/loop">loop</Link>
+
+      <DialogDemo />
       <DataInput />
       <div className="container grid lg:grid-cols-4">
         {data?.length > 0 ? (

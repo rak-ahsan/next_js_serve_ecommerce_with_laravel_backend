@@ -43,6 +43,7 @@ export async function getDataUser() {
       method: "GET",
       next: { tags: ["data"] },
     });
+console.log('get api called');
 
     return responseData;
   } catch (error) {
@@ -53,16 +54,12 @@ export async function getDataUser() {
 
 export async function loop(page: number) {
   try {
-    const responseData = await fetch(
-      `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=30`,
-      {
-        cache: "no-store",
-      }
+    const responseData = await fetchWithAuth(`/loop?page=${page}`,
     );
-    const jsonData = await responseData.json();
-    console.log(jsonData);
+    // const jsonData = await responseData.json();
+    console.log(page);
 
-    return jsonData;
+    return responseData;
   } catch (error) {
     console.error("Error:", error);
     throw error;

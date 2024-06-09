@@ -69,6 +69,18 @@ const InfinitePosts: React.FC<Props> = ({ response = [] }) => {
       </div>
       <div className="overflow-y-scroll h-screen scrollbar-none lg:w-full" style={{ scrollbarWidth: "thin", scrollbarColor: "transparent transparent", margin: '0px' }}>
         <h1 className="text-center">Products</h1>
+        {filterValues.map((item, index) => (
+          <div key={index}>
+            <span>{item}</span>
+            <span onClick={() => {
+              const updatedValues = [...filterValues];
+              updatedValues.splice(index, 1);
+              setFilterValues(updatedValues);
+            }}>x</span>
+          </div>
+        ))}
+
+
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 text-center gap-4 ">
           {posts.map((post, index) => (
             <div key={index} ref={index === posts.length - 1 ? ref : null} className="bg-gray-100 text-ellipsis shadow-md h-48 flex flex-col justify-center items-center rounded-md">

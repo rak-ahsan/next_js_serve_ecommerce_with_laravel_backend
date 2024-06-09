@@ -18,21 +18,21 @@ class TestFactory extends Factory
         $imagePath = 'images';
 
         // Generate the image and get the filename
-        $imageName = $this->faker->image('public/' . $imagePath, 640, 480, null, false);
+        // $imageName = $this->faker->image('public/' . $imagePath, 640, 480, null, false);
 
         // Ensure the image name is correct
-        if (!$imageName) {
-            throw new \Exception('Image generation failed');
-        }
+        // if (!$imageName) {
+        //     throw new \Exception('Image generation failed');
+        // }
 
         // Construct the full image URL
-        $fullImagePath = $baseUrl . '/' . $imagePath . '/' . $imageName;
+        // $fullImagePath = $baseUrl . '/' . $imagePath . '/' . $imageName;
 
         return [
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'password' => bcrypt('password'), // Password encryption
-            'image' => $fullImagePath,
+            // 'image' => $fullImagePath,
         ];
     }
 }

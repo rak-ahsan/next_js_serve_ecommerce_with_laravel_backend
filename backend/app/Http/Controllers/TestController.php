@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Test;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Throwable;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
@@ -17,12 +18,26 @@ class TestController extends Controller
     public function index(Request $request)
     {
         try {
-            $data = Test::orderBy('id', 'DESC')->get();
-            return response()->json($data);
+            if (Cache::has('test_data')) {
+                $data = Cache::get('test_data');
+                return response()->json([$data, 'message' => ' cache']);
+                // return view('home', compact('data'));
+            } else {
+                $data = Test::orderBy('id', 'DESC')->get();
+                Cache::put('test_data', $data, now()->addMinutes(10));
+                return response()->json([$data, 'message' => 'not cache']);
+                // return view('home', compact('data'));
+
+            }
+            // return response()->json($data);
         } catch (\Throwable $th) {
             return response()->json(['error', 'internal error']);
         }
+        // $data = Test::orderBy('id', 'DESC')->get();
+        // return view('home', compact('data'));
     }
+
+
 
 
     public function singleUser($id)
@@ -194,4 +209,6 @@ class TestController extends Controller
             throw $th;
         }
     }
+
+   
 }

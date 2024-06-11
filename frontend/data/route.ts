@@ -43,8 +43,6 @@ export async function getDataUser() {
       method: "GET",
       next: { tags: ["data"] },
     });
-console.log('get api called');
-
     return responseData;
   } catch (error) {
     console.error("Error:", error);

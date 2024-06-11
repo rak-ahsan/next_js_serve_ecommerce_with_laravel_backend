@@ -69,7 +69,6 @@ const FilterPage: React.FC<Props> = ({ setFilterValues }) => {
           onValueChange={(value) => setNewValue(value)} />
         <p className="mt-3">
           ৳ {newValue.join(" - ৳ ")}
-
         </p>
       </div>
 

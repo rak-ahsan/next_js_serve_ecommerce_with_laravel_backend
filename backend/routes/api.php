@@ -26,10 +26,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/update-single-user/{id}', [TestController::class, 'update']);
     Route::post('/image-upload', [TestController::class, 'uploadImage']);
     Route::get('/log-out', [AuthController::class, 'logout']);
-    // Route::get('/get', [TestController::class, 'index']);
 });
 
 
+Route::get('/loop', [TestController::class, 'loop']);
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/registration', [AuthController::class, 'store']);

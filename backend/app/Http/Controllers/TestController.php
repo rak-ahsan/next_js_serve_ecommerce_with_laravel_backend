@@ -17,26 +17,33 @@ class TestController extends Controller
      */
     public function index(Request $request)
     {
-        try {
-            if (Cache::has('test_data')) {
-                $data = Cache::get('test_data');
-                return response()->json([$data, 'message' => ' cache']);
-                // return view('home', compact('data'));
-            } else {
-                $data = Test::orderBy('id', 'DESC')->get();
-                Cache::put('test_data', $data, now()->addMinutes(10));
-                return response()->json([$data, 'message' => 'not cache']);
-                // return view('home', compact('data'));
+        // try {
+        //     if (Cache::has('test_data')) {
+        //         $data = Cache::get('test_data');
+        //         return response()->json($data);
+        //         // return view('home', compact('data'));
+        //     } else {
+        //         $data = Test::orderBy('id', 'DESC')->get();
+        //         Cache::put('test_data', $data, now()->addMinutes(10));
+        //         return response()->json($data);
+        //         // return view('home', compact('data'));
 
-            }
-            // return response()->json($data);
-        } catch (\Throwable $th) {
-            return response()->json(['error', 'internal error']);
-        }
-        // $data = Test::orderBy('id', 'DESC')->get();
+        //     }
+        //     // return response()->json($data);
+        // } catch (\Throwable $th) {
+        //     return response()->json(['error', 'internal error']);
+        // }
+
+        return response()->json($data = Test::orderBy('id', 'DESC')->limit(100)->get());
         // return view('home', compact('data'));
     }
 
+
+    public function loop()
+    {
+        $data = Test::orderBy('id', 'DESC')->paginate(50);
+        return response()->json($data);
+    }
 
 
 
@@ -209,6 +216,4 @@ class TestController extends Controller
             throw $th;
         }
     }
-
-   
 }

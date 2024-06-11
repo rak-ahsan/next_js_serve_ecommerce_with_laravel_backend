@@ -1,6 +1,7 @@
 "use client";
 import FilterPage from "@/app/(frontend)/filter/page";
 import { loop } from "@/data/route";
+import { Cross } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -20,9 +21,6 @@ const InfinitePosts: React.FC<Props> = ({ response = [] }) => {
   const [page, setPage] = useState(2);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-
-  console.log(filterValues);
-
 
   const fetchPosts = async (pageNum: number) => {
     setLoading(true);
@@ -68,17 +66,20 @@ const InfinitePosts: React.FC<Props> = ({ response = [] }) => {
         <FilterPage setFilterValues={setFilterValues} />
       </div>
       <div className="overflow-y-scroll h-screen scrollbar-none lg:w-full" style={{ scrollbarWidth: "thin", scrollbarColor: "transparent transparent", margin: '0px' }}>
-        <h1 className="text-center">Products</h1>
-        {filterValues.map((item, index) => (
-          <div key={index}>
-            <span>{item}</span>
-            <span onClick={() => {
-              const updatedValues = [...filterValues];
-              updatedValues.splice(index, 1);
-              setFilterValues(updatedValues);
-            }}>x</span>
-          </div>
-        ))}
+        <h1 className="text-center text-lg">Products</h1>
+        <div className="flex space-x-4">
+          {filterValues.map((item, index) => (
+            <div key={index} className=" bg-red-600 p-1 rounded-full flex text-white">
+              <span className="pr-3">{item}</span>
+              <span onClick={() => {
+                const updatedValues = [...filterValues];
+                updatedValues.splice(index, 1);
+                setFilterValues(updatedValues);
+              }} className="bg-green-600 rounded-full">
+                <Cross/>
+              </span>
+            </div>
+          ))}</div>
 
 
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 text-center gap-4 ">

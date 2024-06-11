@@ -152,7 +152,7 @@ export function Nav() {
         </NavigationMenuList>
       </NavigationMenu>
       <ModalsCart open={openModal} setOpenModal={setOpenModal}>
-        <CartPage />
+        <CartPage cartDesign={true} />
       </ModalsCart>
     </div>
   );

@@ -19,12 +19,12 @@ const HomePage = async () => {
 
       <DialogDemo />
       <DataInput />
-      <div className="container grid lg:grid-cols-4">
+      <div className="container lg:grid lg:grid-cols-4 ">
         {data?.length > 0 ? (
           data.map((item: any) => (
             <div
               key={item.id}
-              className="p-5 shadow-md w-auto grid content-center text-center grid-cols-1"
+              className="p-5 shadow-md w-full grid content-center text-center grid-cols-1"
             >
               <span>{item?.id}</span>
               <Image

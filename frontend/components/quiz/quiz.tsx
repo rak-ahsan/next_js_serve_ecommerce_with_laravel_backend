@@ -3,18 +3,32 @@ import React, { useState, useEffect } from 'react';
 
 const quizData = [
     {
-        question: 'What is the capital of France?',
-        options: ['Paris', 'Berlin', 'Madrid', 'Rome'],
-        correctAnswer: 'Paris'
+        "type": "multiple",
+        "difficulty": "hard",
+        "category": "General Knowledge",
+        "question": "The Swedish word &quot;Grunka&quot; means what in English?",
+        "correct_answer": "Thing",
+        "incorrect_answers": [
+            "People",
+            "Place",
+            "Pineapple"
+        ]
     },
     {
-        question: 'Which planet is known as the Red Planet?',
-        options: ['Mars', 'Venus', 'Jupiter', 'Saturn'],
-        correctAnswer: 'Mars'
+        "type": "multiple",
+        "difficulty": "easy",
+        "category": "Entertainment: Video Games",
+        "question": "Aperture Science CEO Cave Johnson is voiced by which American actor?",
+        "correct_answer": "J.K. Simmons",
+        "incorrect_answers": [
+            "Nolan North",
+            "John Patrick Lowrie",
+            "Christopher Lloyd"
+        ]
     },
 ];
 
-function QuizApp() {
+const QuizApp = () => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedOption, setSelectedOption] = useState('');
     const [score, setScore] = useState(0);
@@ -23,7 +37,7 @@ function QuizApp() {
 
     useEffect(() => {
         const timer = setInterval(() => {
-            setTimeLeft((prevTime) => {
+            setTimeLeft(prevTime => {
                 if (prevTime === 0) {
                     clearInterval(timer);
                     setShowResult(true);
@@ -35,12 +49,12 @@ function QuizApp() {
         return () => clearInterval(timer);
     }, []);
 
-    const handleOptionSelect = (option: any) => {
+    const handleOptionSelect = (option: React.SetStateAction<string>) => {
         setSelectedOption(option);
     };
 
     const handleNextQuestion = () => {
-        if (selectedOption === quizData[currentQuestion].correctAnswer) {
+        if (selectedOption === quizData[currentQuestion].correct_answer) {
             setScore(score + 1);
         }
         setSelectedOption('');
@@ -57,7 +71,6 @@ function QuizApp() {
             setCurrentQuestion(currentQuestion + 1);
         } else {
             setShowResult(true);
-
         }
     };
 
@@ -70,7 +83,7 @@ function QuizApp() {
     };
 
     return (
-        <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-xl">
+        <div className=" mt-10 p-6 bg-white rounded-lg shadow-xl">
             {showResult ? (
                 <div className="text-center">
                     <h2 className="text-2xl font-bold mb-4">Quiz Result</h2>
@@ -85,15 +98,13 @@ function QuizApp() {
             ) : (
                 <div className="text-center">
                     <h2 className="text-2xl font-bold mb-4">Question {currentQuestion + 1}</h2>
-                    <p className="text-lg mb-4">{quizData[currentQuestion].question}</p>
-                    <div className="md:flex justify-center ">
-                        {quizData[currentQuestion].options.map((option, index) => (
+                    <p className="text-lg mb-4" dangerouslySetInnerHTML={{ __html: quizData[currentQuestion].question }}></p>
+                    <div className="md:flex justify-center">
+                        {[...quizData[currentQuestion].incorrect_answers, quizData[currentQuestion].correct_answer].sort().map((option, index) => (
                             <button
                                 key={index}
                                 onClick={() => handleOptionSelect(option)}
-                                className={`py-2 px-4 rounded  lg:mr-4 m-1
-                  ${selectedOption === option ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'} 
-                  hover:bg-blue-700 hover:text-white`}
+                                className={`py-2 px-4 rounded lg:mr-4 m-1 ${selectedOption === option ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-800'} hover:bg-blue-700 hover:text-white`}
                             >
                                 {option}
                             </button>
@@ -124,6 +135,3 @@ function QuizApp() {
 }
 
 export default QuizApp;
-
-
-

@@ -18,6 +18,7 @@ interface Props {
 const InfinitePosts: React.FC<Props> = ({ response = [] }) => {
   const [posts, setPosts] = useState<Post[]>(response);
   const [filterValues, setFilterValues] = useState([]);
+  const [priceValues, setPriceValues] = useState([]);
   const [page, setPage] = useState(2);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -41,6 +42,10 @@ const InfinitePosts: React.FC<Props> = ({ response = [] }) => {
     }
   };
 
+  // console.log(filterValues);
+  // console.log(priceValues);
+
+
   useEffect(() => {
     fetchPosts(page);
   }, [page]);
@@ -63,25 +68,41 @@ const InfinitePosts: React.FC<Props> = ({ response = [] }) => {
   return (
     <div className="lg:flex md:grid grid-cols-2 space-x-4">
       <div className="filter mb-3 p-3">
-        <FilterPage setFilterValues={setFilterValues} />
+        <FilterPage setFilterValues={setFilterValues} setPriceValues={setPriceValues} />
       </div>
       <div className="overflow-y-scroll h-screen scrollbar-none lg:w-full" style={{ scrollbarWidth: "thin", scrollbarColor: "transparent transparent", margin: '0px' }}>
         <h1 className="text-center text-lg">Products</h1>
         <div className="flex space-x-4">
-          {filterValues.map((item, index) => (
-            <div key={index} className=" bg-red-600 p-1 rounded-full flex text-white">
-              <span className="pr-3">{item}</span>
-              <span onClick={() => {
-                const updatedValues = [...filterValues];
-                updatedValues.splice(index, 1);
-                setFilterValues(updatedValues);
-              }} className="bg-green-600 rounded-full">
-                <Cross/>
-              </span>
-            </div>
-          ))}</div>
+          <div className="flex space-x-4">
+            {filterValues.map((item, index) => (
+              <div key={index} className=" bg-red-600 p-1 rounded-full flex text-white">
+                <span className="pr-3">{item}</span>
+                <span onClick={() => {
+                  const updatedValues = [...filterValues];
+                  updatedValues.splice(index, 1);
+                  setFilterValues(updatedValues);
+                }} className="bg-green-600 rounded-full">
+                  <Cross />
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="flex space-x-4">
+            {priceValues.map((item, index) => (
+              <div key={index} className=" bg-red-600 p-1 rounded-full flex text-white">
+                <span className="pr-3">{item}</span>
+                <span onClick={() => {
+                  const updatedValues = [...filterValues];
+                  updatedValues.splice(index, 1);
+                  setPriceValues(updatedValues);
+                }} className="bg-green-600 rounded-full">
+                  <Cross />
+                </span>
+              </div>
+            ))}
+          </div>
 
-
+        </div>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 text-center gap-4 ">
           {posts.map((post, index) => (
             <div key={index} ref={index === posts.length - 1 ? ref : null} className="bg-gray-100 text-ellipsis shadow-md h-48 flex flex-col justify-center items-center rounded-md">

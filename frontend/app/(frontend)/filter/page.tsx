@@ -3,13 +3,14 @@
 import { AccordionDemo } from "@/components/according";
 import { CheckboxWithText } from "@/components/check-box";
 import { Slider } from "@/components/slider";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface Props {
   setFilterValues?: any
+  setPriceValues?: any
 }
 
-const FilterPage: React.FC<Props> = ({ setFilterValues }) => {
+const FilterPage: React.FC<Props> = ({ setFilterValues, setPriceValues }) => {
   const [newValue, setNewValue] = useState([100, 1000]);
   const [filterValue, setFilterValue] = useState<string[]>([]);
   const [priceValue, setPriceValue] = useState<string[]>([]);
@@ -36,26 +37,25 @@ const FilterPage: React.FC<Props> = ({ setFilterValues }) => {
   ];
 
   const handleCheckboxClick = (item: string) => {
-    if (filterValue.includes(item)) {
-      setFilterValue(filterValue.filter(value => value !== item));
-      setFilterValues(filterValue)
-    } else {
-      setFilterValue([...filterValue, item]);
-      setFilterValues(filterValue)
+    setFilterValue(prevFilterValue => {
+      const newFilterValue = prevFilterValue.includes(item)
+        ? prevFilterValue.filter(value => value !== item)
+        : [...prevFilterValue, item];
 
-    }
+      setFilterValues(newFilterValue);
+      return newFilterValue;
+    });
   };
 
-
   const handlePriceClick = (item: string) => {
-    if (priceValue.includes(item)) {
-      setPriceValue(priceValue.filter(value => value !== item));
-      setFilterValues(priceValue)
-    } else {
-      setPriceValue([...priceValue, item]);
-      setFilterValues(priceValue)
+    setPriceValue(prevPriceValue => {
+      const newPriceValue = prevPriceValue.includes(item)
+        ? prevPriceValue.filter(value => value !== item)
+        : [...prevPriceValue, item];
 
-    }
+        setPriceValues(newPriceValue);
+      return newPriceValue;
+    });
   };
 
   return (
@@ -79,7 +79,7 @@ const FilterPage: React.FC<Props> = ({ setFilterValues }) => {
           ))}
         </AccordionDemo>
 
-        <AccordionDemo title="Price" accValue={"Brand"}>
+        <AccordionDemo title="Price" accValue={"Price"}>
           {price.map((item, index) => (
             <CheckboxWithText key={index} value={item} onClick={() => handlePriceClick(item)} />
           ))}
@@ -87,18 +87,7 @@ const FilterPage: React.FC<Props> = ({ setFilterValues }) => {
 
         <AccordionDemo title="Color" accValue={"Color"}>
           {color.map((item, index) => (
-            <CheckboxWithText key={index} value={item} onClick={() => handlePriceClick(item)} />
-          ))}
-        </AccordionDemo>
-
-        <AccordionDemo title="Color" accValue={"Color"}>
-          {color.map((item, index) => (
-            <CheckboxWithText key={index} value={item} onClick={() => handlePriceClick(item)} />
-          ))}
-        </AccordionDemo>
-        <AccordionDemo title="Color" accValue={"Color"}>
-          {color.map((item, index) => (
-            <CheckboxWithText key={index} value={item} onClick={() => handlePriceClick(item)} />
+            <CheckboxWithText key={index} value={item} onClick={() => handleCheckboxClick(item)} />
           ))}
         </AccordionDemo>
       </div>

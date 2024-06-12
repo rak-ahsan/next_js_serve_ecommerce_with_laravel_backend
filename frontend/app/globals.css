@@ -90,3 +90,7 @@
   -webkit-user-drag: none;
   /* Safari */
 }
+
+.swiper-button-prev{
+  color: red;
+}

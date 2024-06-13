@@ -35,7 +35,7 @@ const ModalsCart: React.FC<ModalsProps> = ({
       <AlertDialog open={open}>
         <div className="toptext flex justify-between ">
           <p className="text-[18px] ">{text}</p>
-          <AlertDialogTrigger className="btn bg-green-600 p-1 rounded-md text-white w-32">
+          <AlertDialogTrigger>
             {icon}
           </AlertDialogTrigger>
         </div>

@@ -1,7 +1,8 @@
 "use client";
 import FilterPage from "@/app/(frontend)/filter/page";
 import { loop } from "@/data/route";
-import { Cross } from "lucide-react";
+import { Cross, LucideMessageCircleX, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
@@ -23,6 +24,7 @@ const InfinitePosts: React.FC<Props> = ({ response = [] }) => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
+  const router = useRouter()
   const fetchPosts = async (pageNum: number) => {
     setLoading(true);
     try {
@@ -65,6 +67,20 @@ const InfinitePosts: React.FC<Props> = ({ response = [] }) => {
     }
   }, [inView, hasMore, loading]);
 
+  useEffect(() => {
+
+    if (filterValues.length > 0 && priceValues.length > 0) {
+      router.push(`loop?filter=${filterValues}&price=${priceValues}`);
+    } else if (filterValues.length > 0) {
+      router.push(`loop?filter=${filterValues}`);
+    } else if (priceValues.length > 0) {
+      router.push(`loop?price=${priceValues}`);
+    }
+
+
+  }, [filterValues, router, priceValues])
+
+
   return (
     <div className="lg:flex md:grid grid-cols-2 space-x-4">
       <div className="filter mb-3 p-3">
@@ -75,14 +91,14 @@ const InfinitePosts: React.FC<Props> = ({ response = [] }) => {
         <div className="flex space-x-4">
           <div className="flex space-x-4">
             {filterValues.map((item, index) => (
-              <div key={index} className=" bg-red-600 p-1 rounded-full flex text-white">
+              <div key={index} className=" bg-gray-400 p-1 pl-2 rounded-full flex text-white">
                 <span className="pr-3">{item}</span>
                 <span onClick={() => {
                   const updatedValues = [...filterValues];
                   updatedValues.splice(index, 1);
                   setFilterValues(updatedValues);
-                }} className="bg-green-600 rounded-full">
-                  <Cross />
+                }} className="bg-green-600 rounded-full cursor-pointer">
+                  <X />
                 </span>
               </div>
             ))}
@@ -96,7 +112,7 @@ const InfinitePosts: React.FC<Props> = ({ response = [] }) => {
                   updatedValues.splice(index, 1);
                   setPriceValues(updatedValues);
                 }} className="bg-green-600 rounded-full">
-                  <Cross />
+                  <X />
                 </span>
               </div>
             ))}

@@ -19,8 +19,8 @@ const CartIcon: React.FC<Props> = ({ product }) => {
   };
 
   return (
-    <div className="hover:bg-green-500">
-      <ShoppingCart onClick={handleClick} />
+    <div>
+      <ShoppingCart onClick={handleClick} className="hover:bg-green-400 "/>
       <ModalsCart open={openModal} setOpenModal={setOpenModal}>
         <CartPage cartDesign={true} />
       </ModalsCart>

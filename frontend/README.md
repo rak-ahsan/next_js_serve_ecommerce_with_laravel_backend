@@ -23,4 +23,4 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources
-- [Next.js Documentation](https://nextjs.org/docs) - learn abou Nex
+- [Next.js Documentation](https://nextjs.org/docs) - learn abou Ne

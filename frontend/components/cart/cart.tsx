@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 const DialogDemo = () => {
+  console.log('product page');
+  
   return (
     <Dialog>
       <DialogTrigger asChild>

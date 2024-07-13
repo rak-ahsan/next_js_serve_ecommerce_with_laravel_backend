@@ -16,11 +16,6 @@ const HomePage = ({ data }: any) => {
   const [openModal, setOpenModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const handleEdit = (item) => {
-    setSelectedItem(item);
-    setOpenModal(true);
-  };
-
   return (
     <>
       <Link href="/loop">loop</Link>

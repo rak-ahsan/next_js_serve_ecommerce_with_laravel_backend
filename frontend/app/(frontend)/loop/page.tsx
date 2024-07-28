@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 
 const ProductPage = async () => {
+  
   const response = await loop(1);
 
   return (

@@ -26,3 +26,5 @@ Route::post('/upload', [TestController::class, 'uploadImages'])->name('upload.im
 Route::get('/upload', function () {
     return view('home');
 });
+
+Route::get('/test', [TestController::class, 'test']);

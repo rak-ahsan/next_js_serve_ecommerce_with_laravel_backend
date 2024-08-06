@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendWelcomeEmail;
 use App\Models\Test;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -215,5 +216,12 @@ class TestController extends Controller
         } catch (Throwable $th) {
             throw $th;
         }
+    }
+
+    public function test()
+    {
+        SendWelcomeEmail::dispatch();
+
+        return 'hi';
     }
 }

@@ -14,4 +14,4 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to
+Open [http://localhost:3000](http://localhost:3000) with your browser t

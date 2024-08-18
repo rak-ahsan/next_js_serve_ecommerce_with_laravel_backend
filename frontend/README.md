@@ -13,4 +13,4 @@ pnpm dev
 # or
 bun dev
 ```
-Open [http://localhost:3000](http://localhos
+Open [http://localhost:3000](http://localho

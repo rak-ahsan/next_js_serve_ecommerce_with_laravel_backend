@@ -13,4 +13,3 @@ pnpm dev
 # or
 bun dev
 ```
-O

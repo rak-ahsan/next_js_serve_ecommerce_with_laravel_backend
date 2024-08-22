@@ -13,4 +13,4 @@ pnpm dev
 # or
 bun dev
 ```
-Open [http:
+Open [http

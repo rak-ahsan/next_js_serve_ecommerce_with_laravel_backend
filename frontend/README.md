@@ -13,4 +13,4 @@ pnpm dev
 # or
 bun dev
 ```
-Ope
+Op

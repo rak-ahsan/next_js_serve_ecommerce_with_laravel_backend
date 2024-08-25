@@ -11,4 +11,4 @@ yarn dev
 # or
 pnpm dev
 # or
-bun 
+bun

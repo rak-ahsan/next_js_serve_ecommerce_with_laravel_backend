@@ -2,7 +2,7 @@
 
 module.exports = {
   images: {
-    domains: ["127.0.0.1"],
+    domains: ["backend.test"],
   },
   typescript: {
     ignoreBuildErrors: true,

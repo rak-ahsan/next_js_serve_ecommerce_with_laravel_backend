@@ -19,6 +19,9 @@ export async function Login(data: { email: string; password: string }) {
     });
     const responseData = await res.json();
 
+
+    console.log(res);
+    
     if (responseData.token) {
       cookies().set("token", responseData.token, {
         httpOnly: true,
